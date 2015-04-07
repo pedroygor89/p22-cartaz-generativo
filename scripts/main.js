@@ -3,9 +3,10 @@ var APP,
 
 // PROCESSAMENTO DE DADOS
 
-function loadCSV(file,id,callback){
+function loadCSV(file,callback){
 
     var dsv = d3.dsv(',', 'text/plain')
+    console.log('loading file',file[0])
 
     dsv(file[1])
         .row(function(d){
@@ -14,7 +15,7 @@ function loadCSV(file,id,callback){
         .get(function(error, rows){
             
             DATA[file[0]] = rows
-            
+            console.log('loaded file',file[0],error)
             if(callback){
                 callback()
             }
@@ -39,15 +40,35 @@ function loadDataset(arr,callback) {
 // APP
 
 APP = {
+
     init: function(){
-        console.log('Hello, d3!')
-        console.log(DATA['countries'])
+        
+        // apaga carregando
+
+        $('#years').text('')
+
+        // cria navegador
+
+        APP.createNav()
+
+    },
+
+    createNav: function(){
+        var data = d3.nest()
+            .key(function(d) { return d.Edition; })
+            .entries(DATA['olympics']);
+
+        data.map(function(d,i){
+            var key = d.key
+            $('#years').append('<a href="#'+key+'">'+key+'</a>')
+        })
     }
+    
 }
 
 // CARREGA DATASET E INICIA
 
 loadDataset([
     ['countries','data/countries.csv'],
-    ['olympics','data/summer-olympic-medallists-1896-2008.csv']
+    ['olympics','data/olympic-medallists-1896-2008.csv']
 ], APP.init);
