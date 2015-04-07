@@ -1,11 +1,9 @@
 var APP,
-	DATA = []
+    DATA = []
 
 // PROCESSAMENTO DE DADOS
 
 function loadCSV(file,id,callback){
-
-    // DVS para carregar CSV separado por ;
 
     var dsv = d3.dsv(',', 'text/plain')
 
@@ -18,34 +16,33 @@ function loadCSV(file,id,callback){
             DATA[file[0]] = rows
             
             if(callback){
-                callback(id)
+                callback()
             }
         });
 }
 
 function loadDataset(arr,callback) {
     var count = 0
-    var id = 0
-    var cbk = function(id){
+    var cbk = function(){
         count++
         if(count < arr.length){
-            loadCSV(arr[count], id, cbk)
+            loadCSV(arr[count],cbk)
         } else {
             if(callback){
                 callback()
             }
         }
     };
-    loadCSV(arr[0],id,cbk)
+    loadCSV(arr[0],cbk)
 }
 
 // APP
 
 APP = {
-	init: function(){
-		console.log('Hello, d3!')
-		console.log(DATA['countries'])
-	}
+    init: function(){
+        console.log('Hello, d3!')
+        console.log(DATA['countries'])
+    }
 }
 
 // CARREGA DATASET E INICIA
