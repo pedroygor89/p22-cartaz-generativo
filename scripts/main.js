@@ -47,6 +47,13 @@ APP = {
 
         $('#years').text('')
 
+        // location hash
+
+        $(window).on('hashchange', function() {
+            //alert(window.location.hash)
+            APP.generate(window.location.hash)
+        })
+
         // cria navegador
 
         APP.createNav()
@@ -62,6 +69,18 @@ APP = {
             var key = d.key
             $('#years').append('<a href="#'+key+'">'+key+'</a>')
         })
+    },
+
+    generate: function(ano){
+        
+        var data = _.where(DATA['olympics'],{Edition: ano.substring(1)})
+
+        data = d3.nest()
+            .key(function(d) { return d["NOC"]; })
+            .rollup(function(d) { return d.length; })
+            .map(data)
+
+        console.log(data)
     }
     
 }
