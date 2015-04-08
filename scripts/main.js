@@ -133,7 +133,7 @@ APP = {
 
                         //var medalhas = 500 / DATA2[prop].medalhas
                         var medalhas = DATA2[prop].medalhas
-                        var rotacao = DATA2[prop].rotacao += (medalhas*0.5 + 10) * 0.001
+                        var rotacao = DATA2[prop].rotacao += (medalhas*0.5 + 10) * 0.0001
 
                         var x = w * 0.5 + p.sin(rotacao) * (medalhas + 20)
                         var y = h * 0.5 + p.cos(rotacao) * (medalhas + 20) //* 0.75
